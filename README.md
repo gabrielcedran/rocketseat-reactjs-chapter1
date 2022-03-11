@@ -105,6 +105,24 @@ _To process jsx files, along with the proper configuration it is necessary to in
 
 In order to test that the basic configuration is working as expected, create two files: the index.jsx and another one. Import the second one in the index file and run the webpack command via terminal (`yarn webpack`). It should run free of errors and generate the correct file in the dist folder.
 
+#### Enable css inside js files
+
+A common practice with react (and other js frameworks) is to import css (and other assets like images) directly from JS files. When webpack is bundling the application and comes across these files it does know how to handle them as they are not javascript. To enable it, it is necessary to add a new webpack loader.
+
+Firstly add the loader's dependencies `style-loader` and `css-loader` (`yarn add -D style-loader css-loader`) and then the following configuration as a new loader within webpack config file:
+
+```
+{
+    test: /\.css$/,
+    exclude: /node_modules/,
+    use: ['style-loader', 'css-loader']
+}
+```
+
+In a nutshell these loaders will pull the css out of the js and add directly to the html page.
+
+
+
 #### Add and configure a dev server
 
 Dev servers enable hot deploy (or "hot bundling") whenever a file a changed and access the project via http request rather than directly from static files (which brings a bunch of limitation).
