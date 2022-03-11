@@ -25,7 +25,7 @@ MacOS: double click on the files with extension .ttf.
 In the configutations search for editor.fontFamily and set it to `JetBrains Mono`.
 
 
-## Booting up a new project from scratch (without create-react-app)
+## Booting up a new project foundation from scratch (without create-react-app)
 
 ### Create the project's base structure
 
@@ -104,5 +104,13 @@ _To process jsx files, along with the proper configuration it is necessary to in
 
 In order to test that the basic configuration is working as expected, create two files: the index.jsx and another one. Import the second one in the index file and run the webpack command via terminal (`yarn webpack`). It should run free of errors and generate the correct file in the dist folder.
 
+
+## Starting with ReactJS
+
+Inside the index.html, import the bundled file and add a div with the id "root". In the index.jsx use the react-dom to render the main component in the root div.
+
+### Avoiding importing React in every file that uses jsx code
+
+Since version 17 it is possible to turn the import of React in every file that uses JSX optional. To do so, it is necessary to tweak babel react preset so that babel carries out this responsibility for us.
 
 
