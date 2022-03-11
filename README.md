@@ -123,8 +123,35 @@ To bootup the server just run the command `yarn webpack serve`.
 
 Source maps helps when debugging the live code as it enables the browser to show the original code instead of the converted and simplified one. There is a bunch of modes when it comes to source map - some a bit more detailed that are meant for development and others less detailed that are meant for production (the main differences are the generation time and the final size).
 
-To enable it, just add the following configuration in the webpack config file at the root level `devtool: 'eval-source-map'`. Eval-source-map is meant for development. 
+To enable it, just add the following configuration in the webpack config file at the root level `devtool: 'eval-source-map'`. Eval-source-map is meant for development.
 
+#### Segregate development and production environments
+
+A well established approach is to use the environment variable `process.env.NODE_ENV` and check whether it is dev or prod. In the webpack config, create a constant that stores if it is development and apply ternaries whenever necessary (up to now in the devtool and mode). Example:
+
+```
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
+...
+
+    mode: isDevelopment ? 'development' : 'production',
+    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+```
+
+##### Determining execution environment
+
+On linux and mac, when executing webpack it is possible to pass an inline environment variable. E.g. `NODE_ENV=production yarn webpack` or `NODE_ENV=production yarn webpack serve`.
+
+In order to mitigate differences between OS's when it comes to env variables there's a lib called `cross-env` (`yarn add -D cross-env`). 
+
+To set environment variables with it, simply add the cross-env execution with the variables that need to be set before the actual command. E.g `yarn cross-env NODE_ENV=production webpack` or `yarn cross-env NODE_ENV=production webpack serve`. To make it even easier and prevent human mistakes, create scripts on package.json:
+
+```
+  "scripts": {
+    "dev": "webpack serve",
+    "build": "cross-env NODE_ENV=production webpack"
+  },
+```
 
 
 
