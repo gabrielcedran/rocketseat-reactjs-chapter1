@@ -81,6 +81,7 @@ To install webpack run the command `yarn add -D webpack webpack-cli webpack-dev-
 const path = require('path') // good practice to have the project running independently of OS
 
 module.exports = {
+    mode: 'development', // this mode runs faster as webpac does not optimise the output resources as it would for production.
     entry: path.resolve(__dirname, 'src', 'index.jsx'), // Entry tells webpack which file it should use to start the bundling process. __dirname means `this directory`. 
     output: { // where the bundled project should be placed
         path: path.resolve(__dirname, 'dist'),
@@ -111,6 +112,12 @@ Inside the index.html, import the bundled file and add a div with the id "root".
 
 ### Avoiding importing React in every file that uses jsx code
 
-Since version 17 it is possible to turn the import of React in every file that uses JSX optional. To do so, it is necessary to tweak babel react preset so that babel carries out this responsibility for us.
+Since version 17 it is possible to turn the import of React in every file that uses JSX optional. To do so, it is necessary to tweak babel react preset so that babel carries out this responsibility for us. Change the `preset-react` into a array (or tuple in this case :P) and the second position provide a configuration object with the property `runtime` as `automatic`.
+
+```
+    ['@babel/preset-react', {
+        runtime: 'automatic'
+    }]
+```
 
 
