@@ -215,6 +215,17 @@ To set environment variables with it, simply add the cross-env execution with th
   },
 ```
 
+## Add typescript
+
+First add the library dependency (`yarn add -D typescript`). In sequence execute the command `yarn tsc --init` to bootstrap the file tsconfig.json with the default configuration (refer to commit to check initial configs).
+
+The next step is to add the babel preset responsible for coping with TS (`yarn add -D @babel/preset-typescript`) and its relevant configuration (just an extra entry with the already existing presets).
+
+Finally configure webpack to also handle `.tsx` and `.ts` (refer to commit).
+
+
+It is also necessary to add the dependency of types of libraries that do not come with their types to prevent type errors (e.g @types/react-dom - `yarn add -D @types/react-dom`). 
+
 
 ## Starting with ReactJS
 
