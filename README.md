@@ -110,6 +110,28 @@ In order to test that the basic configuration is working as expected, create two
 
 Inside the index.html, import the bundled file and add a div with the id "root". In the index.jsx use the react-dom to render the main component in the root div.
 
+### Delegate the responsibility of injecting the generated bundle file into index.html to webpack
+
+To reduce maintenance it is better to delegate to webpack the responsibility of injecting the generated bundle file into the index.html. E.g In case the output file name changes, nothing needs to be done as webpack take care of it.
+
+`html-webpack-plugin` provides this functionality. First add the dependency using yarn (`yarn add -D html-webpack-plugin`). Then extend webpack configuration with the following:
+
+```
+const HtmlWebpackPlugin = require('html-webpack-plugin') // import the dependency
+
+...
+    // at the root level of the exports configuration, add the plugins property with the following value
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ],
+
+```
+
+Now, everytime webpack is executed it will also generate the index.html with the generated bundle injected. 
+
+
 ### Avoiding importing React in every file that uses jsx code
 
 Since version 17 it is possible to turn the import of React in every file that uses JSX optional. To do so, it is necessary to tweak babel react preset so that babel carries out this responsibility for us. Change the `preset-react` into a array (or tuple in this case :P) and the second position provide a configuration object with the property `runtime` as `automatic`.
