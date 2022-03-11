@@ -121,6 +121,11 @@ Firstly add the loader's dependencies `style-loader` and `css-loader` (`yarn add
 
 In a nutshell these loaders will pull the css out of the js and add directly to the html page.
 
+##### Enable css pre-processor
+
+Sass adds some functionalities on top of the vanilla JS. To enable sass in the application you have to (1) add `sass-loader` and `node-sass` dependencies (`yarn add -D node-sass sass-loader`) (2) extend webpack to support sass files and delegate to the proper processor (just add `sass-loader` after `css-loader` and change the the `test` property to look for `.scss` files)
+
+The main difference between `.scss` and `.sass` is that the first requires curly braces to delimiter classes' blocks while the latter doesn't (it is indentation based like python).
 
 
 #### Add and configure a dev server
