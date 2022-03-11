@@ -119,6 +119,14 @@ First add the dependency to webpack dev server using yarn (`yarn add -D webpack-
 
 To bootup the server just run the command `yarn webpack serve`.
 
+#### Configure source maps to ease debugging
+
+Source maps helps when debugging the live code as it enables the browser to show the original code instead of the converted and simplified one. There is a bunch of modes when it comes to source map - some a bit more detailed that are meant for development and others less detailed that are meant for production (the main differences are the generation time and the final size).
+
+To enable it, just add the following configuration in the webpack config file at the root level `devtool: 'eval-source-map'`. Eval-source-map is meant for development. 
+
+
+
 
 ## Starting with ReactJS
 
