@@ -105,6 +105,20 @@ _To process jsx files, along with the proper configuration it is necessary to in
 
 In order to test that the basic configuration is working as expected, create two files: the index.jsx and another one. Import the second one in the index file and run the webpack command via terminal (`yarn webpack`). It should run free of errors and generate the correct file in the dist folder.
 
+#### Add and configure a dev server
+
+Dev servers enable hot deploy (or "hot bundling") whenever a file a changed and access the project via http request rather than directly from static files (which brings a bunch of limitation).
+
+First add the dependency to webpack dev server using yarn (`yarn add -D webpack-dev-server`) and in sequence the following configuration in the webpack config file:
+
+```
+    devServer: {
+        static: path.resolve(__dirname, 'public') // basically where the index.html file is 
+    }
+```
+
+To bootup the server just run the command `yarn webpack serve`.
+
 
 ## Starting with ReactJS
 
@@ -141,5 +155,6 @@ Since version 17 it is possible to turn the import of React in every file that u
         runtime: 'automatic'
     }]
 ```
+
 
 
