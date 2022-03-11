@@ -142,6 +142,45 @@ First add the dependency to webpack dev server using yarn (`yarn add -D webpack-
 
 To bootup the server just run the command `yarn webpack serve`.
 
+##### Enable fast refresh
+
+By default whenever changes are saved webpack bundles the project again and reload the server. During the server reload all the states are reset.
+It can be quite annoying during development as you could lose your scenarios over and over again.
+
+React 16 introduced fast refresh plugin to enable web servers to apply the lastest changes while keeping the state.
+
+First install the needed libs (`yarn add -D @pmmmwh/react-refresh-webpack-plugin react-refresh`). Then configure webpack:
+
+```
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+...
+
+    plugins: [
+        isDevelopment && new ReactRefreshWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'index.html')
+        })
+    ].filter(Boolean), // in case it is not development JS will include an entry with the value `false`, which is an invalid plugin. This hack removes all boolean values
+...
+    devServer: {
+        static: path.resolve(__dirname, 'public'),
+        hot: true // enable the property
+    },
+...
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: {
+                    loader:'babel-loader',
+                    options: {
+                        plugins: [
+                            isDevelopment && require.resolve('react-refresh/babel')
+                        ].filter(Boolean)
+                    }
+                }
+            },
+```
+
 #### Configure source maps to ease debugging
 
 Source maps helps when debugging the live code as it enables the browser to show the original code instead of the converted and simplified one. There is a bunch of modes when it comes to source map - some a bit more detailed that are meant for development and others less detailed that are meant for production (the main differences are the generation time and the final size).
@@ -175,7 +214,6 @@ To set environment variables with it, simply add the cross-env execution with th
     "build": "cross-env NODE_ENV=production webpack"
   },
 ```
-
 
 
 ## Starting with ReactJS
@@ -215,4 +253,6 @@ Since version 17 it is possible to turn the import of React in every file that u
 ```
 
 
+## Notes
 
+React's important concepts: component, property and state.
